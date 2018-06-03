@@ -6,7 +6,10 @@ import { AppHeader } from '@coreui/react';
 // sidebar nav config
 import navigation from '../_nav';
 // routes config
+import TableRow from './TableRow';
+import TableHeader from './TableHeader';
 
+// import request from 'request';
 import {
     Badge,
     Button,
@@ -166,7 +169,15 @@ export default class Pfaindex extends React.Component
     
         this.state = {
           dropdownOpen: false,
-          data : []
+          data : [{
+                    "name": "coin1",
+                    "price": "12",
+                    "marketcap": "231"
+                    },{
+                    "name": "coin2",
+                    "price": "12d",
+                    "marketcap": "231"
+                }]
         };
     }
     getCard() {
@@ -174,8 +185,15 @@ export default class Pfaindex extends React.Component
             <div></div>
         )
     }
+    // componentDidMount(){
+    // Call THE API 
+    //     this.setState({          
+    //
+    //     })
+    // }
     render () {
-        
+
+
         return (
             <div>
                 <div className="app">
@@ -295,115 +313,14 @@ export default class Pfaindex extends React.Component
                             </CardHeader> 
                                 <CardBody>
                                 <Table hover responsive borderless className="table-outline">
-                                    <thead className="thead-light">
-                                        <tr>
-                                           {/*<th className="text-center"><i className="icon-people"></i></th>*/} 
-                                            <th className="text-center" >Name</th>
-                                            <th>Price</th>
-                                            <th className="text-center" >Change</th>
-                                            <th>Change%</th>
-                                            <th className="text-center" >Volume</th>
-                                            <th >Time</th>
-                                        </tr>
-                                    </thead>
+                                    <TableHeader></TableHeader>
                                     <tbody>
-                                    <tr className="clickable-row" >
-                                    <td className="text-center" ><strong>AAPL</strong>
-                                    </td>
-                                    <td> <div> 5426.356 </div>
-                                    </td>
-                                    <td className="text-center"> <div> 5.65 </div>
-                                    </td>
-                                    <td> <strong><div style={{ color : '#228B22' }} > + 2.01</div></strong>
-                                    </td>
-                                    <td className="text-center">
-                                        <i className="fa fa-cc-mastercard" style={{ fontSize: 24 + 'px' }}></i>
-                                    </td>
-                                    <td>
-                                        <div className="small" >5 minutes ago</div>
-                                    </td>
-                                    </tr>
-
-                                    <tr>
-                                    <td className="text-center" ><strong>AAPL</strong>
-                                    </td>
-                                    <td> <div> 5426.356 </div>
-                                    </td>
-                                    <td className="text-center"> <div> 5.65 </div>
-                                    </td>
-                                    <td> <strong><div style={{ color : '#228B22' }} > + 2.01</div></strong>
-                                    </td>
-                                    <td className="text-center">
-                                        <i className="fa fa-cc-mastercard" style={{ fontSize: 24 + 'px' }}></i>
-                                    </td>
-                                    <td>
-                                        <div className="small" >5 minutes ago</div>
-                                    </td>
-                                    </tr>
-                                    <tr>
-                                    <td className="text-center" ><strong>AAPL</strong>
-                                    </td>
-                                    <td> <div> 5426.356 </div>
-                                    </td>
-                                    <td className="text-center"> <div> 5.65 </div>
-                                    </td>
-                                    <td> <strong><div style={{ color : '#228B22' }} > + 2.01</div></strong>
-                                    </td>
-                                    <td className="text-center">
-                                        <i className="fa fa-cc-mastercard" style={{ fontSize: 24 + 'px' }}></i>
-                                    </td>
-                                    <td>
-                                        <div className="small" >5 minutes ago</div>
-                                    </td>
-                                    </tr>
-                                    <tr>
-                                    <td className="text-center" ><strong>AAPL</strong>
-                                    </td>
-                                    <td> <div> 5426.356 </div>
-                                    </td>
-                                    <td className="text-center"> <div> 5.65 </div>
-                                    </td>
-                                    <td> <strong><div style={{ color : '#228B22' }} > + 2.01</div></strong>
-                                    </td>
-                                    <td className="text-center">
-                                        <i className="fa fa-cc-mastercard" style={{ fontSize: 24 + 'px' }}></i>
-                                    </td>
-                                    <td>
-                                        <div className="small" >5 minutes ago</div>
-                                    </td>
-                                    </tr>
-                                    <tr>
-                                    <td className="text-center" ><strong>AAPL</strong>
-                                    </td>
-                                    <td> <div> 5426.356 </div>
-                                    </td>
-                                    <td className="text-center"> <div> 5.65 </div>
-                                    </td>
-                                    <td> <strong><div style={{ color : '#228B22' }} > + 2.01</div></strong>
-                                    </td>
-                                    <td className="text-center">
-                                        <i className="fa fa-cc-mastercard" style={{ fontSize: 24 + 'px' }}></i>
-                                    </td>
-                                    <td>
-                                        <div className="small" >5 minutes ago</div>
-                                    </td>
-                                    </tr>
-                                    <tr>
-                                    <td className="text-center" ><strong>AAPL</strong>
-                                    </td>
-                                    <td> <div> 5426.356 </div>
-                                    </td>
-                                    <td className="text-center"> <div> 5.65 </div>
-                                    </td>
-                                    <td> <strong><div style={{ color : '#228B22' }} > + 2.01</div></strong>
-                                    </td>
-                                    <td className="text-center">
-                                        <i className="fa fa-cc-mastercard" style={{ fontSize: 24 + 'px' }}></i>
-                                    </td>
-                                    <td>
-                                        <div className="small" >5 minutes ago</div>
-                                    </td>
-                                    </tr>
+                                   {     
+                                        this.state.data.map(function(item,key){
+                                            return (
+                                                <TableRow name={item.name} price={item.price} marketcap={item.marketcap}></TableRow>
+                                            )
+                                    })}
                                     </tbody>
                                 </Table>
                                 </CardBody>

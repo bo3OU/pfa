@@ -26,12 +26,13 @@ class App extends Component {
     return (
       <HashRouter>
         <Switch>
+          <Route exact path="/pfa" name="Homepage" component={Pfaindex} />
+          <Route exact path="/coin/:coin" name="Homepage" component={Pfamoreinfo} />
           <Route exact path="/login" name="Login Page" component={Login} />
           <Route exact path="/register" name="Register Page" component={Register} />
           <Route exact path="/404" name="Page 404" component={Page404} />
           <Route exact path="/500" name="Page 500" component={Page500} />
-          <Route exact path="/pfa" name="Homepage" component={Pfaindex} />
-          <Route exact path="/btc" name="Homepage" component={Pfamoreinfo} />
+
           <Route path="/" name="Home" component={DefaultLayout} />
         </Switch>
       </HashRouter>
