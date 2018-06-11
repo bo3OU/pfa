@@ -1,15 +1,39 @@
 import React, { Component } from 'react';
-import { Button, Card, CardBody, CardGroup, Col, Container, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import { Button, Card, CardBody, CardGroup, UncontrolledAlert, Col, Container, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import request from 'request';
+import consts from '../../../consts';
 
 class Login extends Component {
   constructor() {
     super();
     this.state = {
       login: '',
-      password: ''
+      password: '',
+      message:''
     };
   }
-
+  signin() {
+    request.post(consts.url + "login", {form:{
+      login: this.state.login,
+      password: this.state.password
+    }}, function (err,httpResponse,body){
+      var data = JSON.parse(body);
+      this.setState({message: data.error})
+      console.log(data);
+      if(data.token){
+        localStorage.setItem("webToken", data.token)
+        console.log(localStorage.getItem("webToken"))
+        window.location.replace(consts.myurl + "");
+      }
+      
+      // if(httpResponse.statusCode == 200) {
+      //   console.log("HALLELUJAH");
+      //   var token = body.token;
+      //   //redirect to login
+      //   window.location.replace(consts.myurl + "login");
+      // }
+    }.bind(this))
+  }
 
   render() {
     return (
@@ -22,6 +46,9 @@ class Login extends Component {
                   <CardBody>
                     <h1>Login</h1>
                     <p className="text-muted">Sign In to your account</p>
+                    <UncontrolledAlert color="danger" style={{visibility : this.state.message ? 'visible' : 'hidden'}}> 
+                      {this.state.message}
+                    </UncontrolledAlert>
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
@@ -40,7 +67,7 @@ class Login extends Component {
                     </InputGroup>
                     <Row>
                       <Col xs="6">
-                        <Button color="primary" className="px-4">Login</Button>
+                        <Button color="primary" className="px-4" onClick={() => this.signin()}>Login</Button>
                       </Col>
                       <Col xs="6" className="text-right">
                         <Button color="link" className="px-0">Forgot password?</Button>

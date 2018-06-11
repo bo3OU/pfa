@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
-
+import request from 'request';
+import consts from '../consts';
 import { AppHeader } from '@coreui/react';
 // sidebar nav config
 import navigation from '../_nav';
@@ -172,11 +173,17 @@ export default class Pfaindex extends React.Component
           data : [{
                     "name": "coin1",
                     "price": "12",
-                    "marketcap": "231"
+					"marketcap": "231",
+					"image": "https://www.cryptocompare.com/media/19786/max.png",
+					"fullname": "COINFULLNAME1",
+					"volume": "2153"
                     },{
                     "name": "coin2",
                     "price": "12d",
-                    "marketcap": "231"
+					"marketcap": "231",
+					"image": "https://www.cryptocompare.com/media/20336/ltb.png",
+					"fullname": "COINFULLNAMELETSGO",
+					"volume": "2153"
                 }]
         };
     }
@@ -185,12 +192,24 @@ export default class Pfaindex extends React.Component
             <div></div>
         )
     }
-    // componentDidMount(){
-    // Call THE API 
-    //     this.setState({          
-    //
-    //     })
-    // }
+    //async componentDidMount(){
+    componentDidMount(){
+      try {
+        //setInterval(async () => {
+			request.get(consts.url + "api/coin/data",function(err, httpResponse, body) {
+				var data = JSON.parse(body);
+				this.setState({          
+					data : data
+				})
+			}.bind(this));
+        //}, 2000);
+      } catch(e) {
+        console.log(e);
+      }
+    //Call THE API 
+
+
+    }
     render () {
 
 
@@ -318,7 +337,7 @@ export default class Pfaindex extends React.Component
                                    {     
                                         this.state.data.map(function(item,key){
                                             return (
-                                                <TableRow name={item.name} price={item.price} marketcap={item.marketcap}></TableRow>
+                                                <TableRow name={item.name} image={item.image} price={item.price} marketcap={item.marketcap} fullname={item.fullname} volume={item.volume} key={key}></TableRow>
                                             )
                                     })}
                                     </tbody>

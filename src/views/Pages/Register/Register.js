@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Card, CardBody, CardFooter, Col, Container, Input, InputGroup, InputGroupAddon, InputGroupText, Row, UncontrolledAlert } from 'reactstrap';
 import consts from '../../../consts';
 import request from 'request';
+
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -16,8 +17,8 @@ class Register extends Component {
       message: '',
     };
 }
-signUp() {
-  request.post("http://localhost:4000/register", {form:{
+register() {
+  request.post(consts.url + "/register", {form:{
     login: this.state.login,
     password: this.state.password,
     email: this.state.email,
@@ -75,7 +76,7 @@ signUp() {
                     </InputGroupAddon>
                     <Input type="password" placeholder="Repeat password" onChange={event => this.setState({passwordver: event.target.value})}/>
                   </InputGroup>
-                  <Button color="success" block onClick={() => this.signUp()}>Create Account</Button>
+                  <Button color="success" block onClick={() => this.register()}>Create Account</Button>
                 </CardBody>
                 <CardFooter className="p-4">
                   <Row>
