@@ -14,6 +14,7 @@
   "dependencies": {
     "@coreui/coreui-plugin-chartjs-custom-tooltips": "^1.2.0",
     "@coreui/react": "^2.0.0-beta.3",
+    "ajv": "^6.0.0",
     "bootstrap": "^4.1.1",
     "chart.js": "^2.7.2",
     "classnames": "^2.2.5",
@@ -22,6 +23,7 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "flag-icon-css": "^3.0.0",
     "font-awesome": "^4.7.0",
+    "jquery": "^1.9.1",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
     "react-chartjs-2": "^2.7.2",

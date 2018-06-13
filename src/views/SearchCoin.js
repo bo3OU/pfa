@@ -3,7 +3,7 @@ import { Collapse, UncontrolledDropdown, NavbarToggler, Badge, DropdownItem, Dro
 import PropTypes from 'prop-types';
 import request from 'request';
 import consts from '../consts';
-
+import Select from 'react-select';
 class SearchCoin extends Component {
   	constructor(props) {
 		super(props)
@@ -28,7 +28,9 @@ class SearchCoin extends Component {
 			<input onChange={event => this.setState({searchValue: event.target.value})}>
 
 			</input>
+<Select>
 
+</Select>
 			</React.Fragment>
 		);
 	}

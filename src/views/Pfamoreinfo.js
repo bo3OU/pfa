@@ -224,32 +224,6 @@ export default class Pfamoreinfo extends React.Component {
                   </Card>
                   </Col>
                 </Row>
-                <Row>
-                  <Col>
-                    <card>
-                      <CardBody>
-                        <Row>
-                          <Col>
-                            <img />
-                          </Col>
-                          <Col>
-                            <Row>
-                              salam
-                            </Row>
-                            <Row>
-                              <strong>
-                                salam2ddddddddddddddddddddddddd dqsd qsjd qnsdqh sbdhbqshdbh qbsbdhb hqbsdhb qsbdb qsd
-                              </strong>
-                            </Row>
-                            <Row>
-                              somethiong
-                            </Row>
-                          </Col>
-                        </Row>
-                      </CardBody>
-                    </card> 
-                  </Col>
-                </Row>
               </Container>
             </div>
           </main>
