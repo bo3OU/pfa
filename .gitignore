@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-!/node_modules/autosuggest-highlight
+!/node_modules/autosuggest-highlight/*
 package-lock.json
 
 # testing

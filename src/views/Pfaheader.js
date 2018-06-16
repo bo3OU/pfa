@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Collapse, UncontrolledDropdown, NavbarToggler, Badge, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, NavLink, NavbarBrand } from 'reactstrap';
+import { Container, Collapse, UncontrolledDropdown, NavbarToggler, Badge, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, NavLink, NavbarBrand } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 import { AppAsideToggler, AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import logo from '../assets/img/brand/logo.svg'
 import sygnet from '../assets/img/brand/sygnet.svg'
-//import SearchCoin from './SearchCoin';
+import SearchCoin from './SearchCoin';
+import SearchCoin2 from './SearchCoin2';
 const propTypes = {
   children: PropTypes.node,
 };
@@ -66,24 +67,25 @@ class Pfaheader extends Component {
     return (
       <React.Fragment>
         {/*<AppSidebarToggler className="d-lg-none" display="md" mobile />*/}
-
+<Container>
         <NavbarBrand href="/"><div style={{ fontSize: '18px', color: '#777555' }}>PFA</div></NavbarBrand>
        {/* <AppSidebarToggler className="d-md-down-none" display="lg" /> */}
-
+       <SearchCoin2></SearchCoin2>
        <NavbarToggler onClick={this.toggle} />
        <Collapse isOpen={this.state.isOpen} navbar>
        <Nav className="ml-auto" navbar>
        {/*<SearchCoin></SearchCoin>*/}
+
          <NavItem>
-           <NavLink href="/components/">Home</NavLink>
+           <NavLink href="#/pfa">Home</NavLink>
          </NavItem>
          <NavItem>
-           <NavLink href="/">About Us</NavLink>
+           <NavLink href="#/news">News</NavLink>
          </NavItem>
 			{this.getItem()}
        </Nav>
      </Collapse>
-
+     </Container>
 
 
         {/*<AppAsideToggler className="d-lg-none" mobile />*/}
