@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 // Styles
 // Import Flag Icons Set
@@ -24,7 +24,7 @@ import PfaNews from './views/PfaNews';
 class App extends Component {
   render() {
     return (
-      <HashRouter>
+      <BrowserRouter>
         <Switch>
           <Route exact path="/pfa" name="Homepage" component={Pfaindex} />
           <Route exact path="/coin/:coin" name="Homepage" component={Pfamoreinfo} />
@@ -36,7 +36,7 @@ class App extends Component {
 
           <Route path="/" name="Home" component={DefaultLayout} />
         </Switch>
-      </HashRouter>
+      </BrowserRouter>
     );
   }
 }

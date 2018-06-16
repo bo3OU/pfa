@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { AppAsideToggler, AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import logo from '../assets/img/brand/logo.svg'
 import sygnet from '../assets/img/brand/sygnet.svg'
-import SearchCoin from './SearchCoin';
 import SearchCoin2 from './SearchCoin2';
 const propTypes = {
   children: PropTypes.node,
@@ -29,7 +28,7 @@ class Pfaheader extends Component {
     });
   }
   	getItem() {
-		if (localStorage.getItem("webToken"))
+		if (localStorage.getItem("webToken")=="")
 			return (
 				<UncontrolledDropdown nav inNavbar>
 				<DropdownToggle nav caret>
@@ -77,12 +76,12 @@ class Pfaheader extends Component {
        {/*<SearchCoin></SearchCoin>*/}
 
          <NavItem>
-           <NavLink href="#/pfa">Home</NavLink>
+           <NavLink href="/pfa">Home</NavLink>
          </NavItem>
          <NavItem>
-           <NavLink href="#/news">News</NavLink>
+           <NavLink href="/news">News</NavLink>
          </NavItem>
-			{this.getItem()}
+			  {this.getItem()}
        </Nav>
      </Collapse>
      </Container>

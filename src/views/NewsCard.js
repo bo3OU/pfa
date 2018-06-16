@@ -23,28 +23,27 @@ class NewsCard extends Component {
             // { this.props.body }
             // { this.props.overview }
             <Row>
+            <Col xs="12" sm="12" lg="12">
                 <Card>
                     <CardBody>
                         <Row>
-                            <Col>
-                                <img />
+                            <Col lg="3">
+                            <img src={this.props.image}></img>
                             </Col>
-                            <Col>
-                                <Row>
-                                    salam
-                                </Row>
+                            <Col lg="9">
                                 <Row>
                                     <strong>
-                                    { this.props.url }
+                                        <a href={this.props.url}>{ this.props.title }</a> 
                                     </strong>
                                 </Row>
                                 <Row>
-                                    something
+                                    { this.props.overview }
                                 </Row>
                             </Col>
                         </Row>
                     </CardBody>
                 </Card> 
+                </Col>
             </Row>
 		);
 	}

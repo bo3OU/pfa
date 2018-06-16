@@ -94,7 +94,7 @@ export default class Pfaindex extends Component
                             this.state.data.map(function(item,key){
                                 return (
                                     <Row>
-                                        <NewsCard url={item.url} title={item.title} overview={item.overview} marketcap={item.marketcap} fullname={item.fullname} image={item.image} key={key}></NewsCard>
+                                        <NewsCard url={item.url} title={item.title} overview={item.overview} marketcap={item.marketcap} fullname={item.fullname} image={item.image} key={item.id}></NewsCard>
                                     </Row>
                                 )
                         })}

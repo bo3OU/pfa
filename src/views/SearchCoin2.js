@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import request from 'request';
-import st from 'sync-request';
 import consts from '../consts';
 import Autosuggest from 'react-autosuggest';
 import AutosuggestHighlightMatch from 'autosuggest-highlight/match';
@@ -13,7 +12,6 @@ import './react-autocomplete2.css';
   }
   
   function getSuggestionValue(suggestion) {
-    //TODO REDIRECT HERE 
     window.location.replace(consts.myurl + "coin/" + suggestion.name);
     return `${suggestion.fullname}`;//${suggestion.last}`;
   }

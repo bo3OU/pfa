@@ -216,11 +216,11 @@ export default class Pfaindex extends React.Component
         return (
             <div>
                 <div className="app">
-                    <Navbar color="light" light expand="sm">
-                        <Pfaheader />
-                    </Navbar>
                     
-                  
+                      <Navbar color="light" light expand="sm">
+                          <Pfaheader />
+                      </Navbar>
+                      
                     <main className="main">
                         <div className="animated fadeIn">
                         <Container style = {{marginTop: 40 + "px"}} >
