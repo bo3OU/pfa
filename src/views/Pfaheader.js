@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Collapse, UncontrolledDropdown, NavbarToggler, Badge, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, NavLink, NavbarBrand } from 'reactstrap';
 import PropTypes from 'prop-types';
-
-import { AppAsideToggler, AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
-import logo from '../assets/img/brand/logo.svg'
-import sygnet from '../assets/img/brand/sygnet.svg'
+import consts from '../consts.js'
 import SearchCoin2 from './SearchCoin2';
 const propTypes = {
   children: PropTypes.node,
@@ -13,48 +10,53 @@ const propTypes = {
 const defaultProps = {};
 
 class Pfaheader extends Component {
-  constructor(props) {
-    super(props)
+	constructor(props) {
+		super(props)
 
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      isOpen: false
-    };
-  }
+		this.toggle = this.toggle.bind(this);
+		this.state = {
+		isOpen: false
+		};
+	}
 
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  }
-  	getItem() {
-		if (localStorage.getItem("webToken")=="")
-			return (
-				<UncontrolledDropdown nav inNavbar>
-				<DropdownToggle nav caret>
-				  Account
-				</DropdownToggle>
-				<DropdownMenu right>
-				  <DropdownItem>
-					Favorites
-				  </DropdownItem>
-				  <DropdownItem>
-					Settings
-				  </DropdownItem>
-				  <DropdownItem>
-					Log out
-				  </DropdownItem>
-				</DropdownMenu>
-			  </UncontrolledDropdown>
-			);
+	logout() {
+		localStorage.removeItem("webToken");
+		window.location.replace(consts.myurl + "login");
+	}
+
+	toggle() {
+		this.setState({
+		isOpen: !this.state.isOpen
+		});
+	}
+
+	getItem() {
+		if (localStorage.getItem("webToken")===null)
+		return (
+		<NavItem>
+			<NavLink href="/login">Login</NavLink>
+			</NavItem>
+		);
+		
 		else {
-			return (
-				<NavItem>
-					<NavLink href="/login">Login</NavLink>
-			  	</NavItem>
-			);
+		return (
+			<UncontrolledDropdown nav inNavbar>
+			<DropdownToggle nav caret>
+			Account
+			</DropdownToggle>
+			<DropdownMenu right>
+			<DropdownItem>
+				Favorites
+			</DropdownItem>
+			<DropdownItem onClick={this.logout}>
+				Log out
+			</DropdownItem>
+			</DropdownMenu>
+			</UncontrolledDropdown>
+		);
 		}
-  	}
+	}
+
   componentWillMount() {
     
   }
@@ -66,7 +68,7 @@ class Pfaheader extends Component {
     return (
       <React.Fragment>
         {/*<AppSidebarToggler className="d-lg-none" display="md" mobile />*/}
-<Container>
+		<Container>
         <NavbarBrand href="/"><div style={{ fontSize: '18px', color: '#777555' }}>PFA</div></NavbarBrand>
        {/* <AppSidebarToggler className="d-md-down-none" display="lg" /> */}
        <SearchCoin2></SearchCoin2>

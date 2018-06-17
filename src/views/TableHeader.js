@@ -14,6 +14,7 @@ render() {
             <th className="text-center" >Price</th>
             <th className="text-center" >Market Cap</th>
             <th className="text-center" >Volume</th>
+            <th className="text-center" ></th>
             {/*<th >Time</th>*/}
         </tr>
         </thead>

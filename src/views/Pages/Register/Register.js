@@ -6,9 +6,9 @@ import request from 'request';
 class Register extends Component {
   constructor(props) {
     super(props);
-
-    //this.toggle = this.toggle.bind(this);
-
+    if (localStorage.getItem("webToken") !== null) {
+			window.location.replace(consts.myurl + "pfa");
+		}
     this.state = {
       login: '',
       password: '',
@@ -27,8 +27,6 @@ register() {
     var data = JSON.parse(body);
     this.setState({message: data.error})
     if(httpResponse.statusCode == 201) {
-      console.log("HALLELUJAH");
-      //redirect to login
       window.location.replace(consts.myurl + "login");
     }
   }.bind(this))
@@ -78,15 +76,8 @@ register() {
                   </InputGroup>
                   <Button color="success" block onClick={() => this.register()}>Create Account</Button>
                 </CardBody>
-                <CardFooter className="p-4">
-                  <Row>
-                    <Col xs="12" sm="6">
-                      <Button className="btn-facebook" block><span>facebook</span></Button>
-                    </Col>
-                    <Col xs="12" sm="6">
-                      <Button className="btn-twitter" block><span>twitter</span></Button>
-                    </Col>
-                  </Row>
+                <CardFooter className="p-2">
+                    <center><Button color="link" className="px-0" href="/login">Already have an account?</Button></center>
                 </CardFooter>
               </Card>
             </Col>

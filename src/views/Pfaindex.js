@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import request from 'request';
 import consts from '../consts';
+import util from 'util';
 import { AppHeader } from '@coreui/react';
 // sidebar nav config
 import navigation from '../_nav';
@@ -12,31 +13,24 @@ import TableHeader from './TableHeader';
 
 // import request from 'request';
 import {
-    Badge,
     Button,
     ButtonDropdown,
     ButtonGroup,
-    ButtonToolbar,
     Card,
     CardBody,
-    CardFooter,
     CardHeader,
-    CardTitle,
     Col,
-    Dropdown,
     DropdownItem,
     DropdownMenu,
     DropdownToggle,
     Navbar,
-    Progress,
     Row,
     Table,
   } from 'reactstrap';
 
 import { Line } from 'react-chartjs-2';
-import DefaultHeader from '../containers/DefaultLayout/DefaultHeader';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
-import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
+import { getStyle } from '@coreui/coreui/dist/js/coreui-utilities';
 
 import Pfaheader from './Pfaheader';
 const brandSuccess = getStyle('--success')
@@ -164,52 +158,92 @@ const cardChartData1 = {
 export default class Pfaindex extends React.Component
 {
     constructor(props) {
-        super(props);
-    
-        //this.toggle = this.toggle.bind(this);
-    
+        super(props);    
         this.state = {
-          dropdownOpen: false,
-          data : [{
-                    "name": "coin1",
-                    "price": "12",
-					"marketcap": "231",
-					"image": "https://www.cryptocompare.com/media/19786/max.png",
-					"fullname": "COINFULLNAME1",
-					"volume": "2153"
-                    },{
-                    "name": "coin2",
-                    "price": "12d",
-					"marketcap": "231",
-					"image": "https://www.cryptocompare.com/media/20336/ltb.png",
-					"fullname": "COINFULLNAMELETSGO",
-					"volume": "2153"
-                }]
-        };
-    }
+		  data : [],
+		  favs: [],
+          dataFull : false
+		};
+		this.refreshValues = this.refreshValues.bind(this);
+	}
+	
     getCard() {
         return (
             <div></div>
         )
-    }
+	}
+	
     //async componentDidMount(){
     componentDidMount(){
-      try {
-        //setInterval(async () => {
-			request.get(consts.url + "api/coin/data",function(err, httpResponse, body) {
+		try {
+			//setInterval(async () => {
+				request.get(consts.url + "api/coin/data",function(err, httpResponse, body) {
+					var data = JSON.parse(body);
+					this.setState({          
+						data : data
+					})
+					this.setState({dataFull: false});
+					}.bind(this)
+				);
+							//}, 10000);
+				if (localStorage.getItem("webToken") !== null){
+					var options = {
+						url: consts.url + "api/favs",
+						headers: {
+							'Authorization': "Bearer " + localStorage.getItem("webToken")
+						}
+					};
+					request.get(options,function(err, httpResponse, body) {
+						var data = JSON.parse(body);
+						this.setState({          
+							favs : data
+						})
+						}.bind(this)
+					);
+				}
+		} catch(e) {
+			console.log(e);
+		}
+	}
+
+    loadingSpinner() {
+		if (this.state.dataFull)
+		return (
+			<div>
+				<strong>LOL</strong>
+			</div>
+		);
+		else {
+			return (
+				<div>
+					
+				</div>
+			);
+		}
+    }
+
+
+    refreshValues() {
+		console.log("refresing values");
+		var options = {
+			url: consts.url + "api/favs",
+			headers: {
+			'Authorization': "Bearer " + localStorage.getItem("webToken")
+			}
+		};
+		setTimeout(() => {
+			request.get(options,(err, httpResponse, body) => {	
+				console.log("requestion refresh query");
 				var data = JSON.parse(body);
 				this.setState({          
-					data : data
+					favs : data
 				})
-			}.bind(this));
-        //}, 2000);
-      } catch(e) {
-        console.log(e);
-      }
-    //Call THE API 
+				}
+			);
+		},1000)
 
+	}
 
-    }
     render () {
 
 
@@ -327,21 +361,33 @@ export default class Pfaindex extends React.Component
                             <Row>
                             <Col>
                             <Card> 
-                            <CardHeader>
-                                Watchlist
+                            <CardHeader>	
+                                Coins List
                             </CardHeader> 
                                 <CardBody>
                                 <Table hover responsive borderless className="table-outline">
                                     <TableHeader></TableHeader>
-                                    <tbody>
+                                    <tbody>		
                                    {     
                                         this.state.data.map(function(item,key){
                                             return (
-                                                <TableRow name={item.name} image={item.image} price={item.price} marketcap={item.marketcap} fullname={item.fullname} volume={item.volume} key={key}></TableRow>
+												<TableRow name={item.name} 
+															fav={(this.state.favs.filter(e => e.id == item.id).length > 0) ? "true" : "false"} 
+															image={item.image} 
+															price={item.price} 
+															marketcap={item.marketcap} 
+															fullname={item.fullname} 
+															volume={item.volume} 
+															id={item.id} 
+															key={item.id}
+															refreshValues={ this.refreshValues }
+															>
+												</TableRow>
                                             )
-                                    })}
+                                    }.bind(this))}
                                     </tbody>
                                 </Table>
+                                { this.loadingSpinner()}
                                 </CardBody>
                             </Card>
                             </Col>
