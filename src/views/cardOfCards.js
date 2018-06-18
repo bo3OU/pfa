@@ -3,9 +3,6 @@ import consts from '../consts';
 import request from 'request';
 import CoinCard from './coinCard';
 import {
-    Button,
-    Card,
-    CardBody,
     Col,
     Row,
   } from 'reactstrap';
@@ -25,7 +22,6 @@ class cardOfCards extends Component {
             this.setState({
                 data: JSON.parse(body)
             })
-            console.log(this.state.data);
         }.bind(this))
     }
 
@@ -43,6 +39,7 @@ class cardOfCards extends Component {
                                     price={item.price}
                                     change24={item.change24}
                                     data={[630, 670, 700, 635, 660, 640, 651]}
+                                    key={key}
                                 >
                                 </CoinCard>
                             </Col>

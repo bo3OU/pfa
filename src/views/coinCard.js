@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import consts from '../consts';
-
+import request from 'request';
 import { Line } from 'react-chartjs-2';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { getStyle } from '@coreui/coreui/dist/js/coreui-utilities';
@@ -83,8 +83,19 @@ class coinCard extends Component {
         super();
         this.link = this.link.bind(this);
         console.log("at least called"); 
+        this.state = ({
+          data: []
+        })
     }
 
+    getData() {
+      request.get('',function(err,request, body) {
+        var data = JSON.parse(body);
+        this.setState({
+          data: data
+        })
+      }.bind(this))
+    }
 
     link() {
         window.location.replace(consts.myurl + "coin/" + this.props.coin);
