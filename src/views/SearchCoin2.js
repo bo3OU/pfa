@@ -56,6 +56,18 @@ import './react-autocomplete2.css';
       });
     };
 
+    fixedEncodeURIComponent(str) {
+      return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
+        return '%' + c.charCodeAt(0).toString(16);
+      });
+    }
+
+    // reverseFixedEncodeURIComponent(str) {
+    //   return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
+    //     return '%' + c.charCodeAt(0).toString(16);
+    //   });
+    // }
+
     onSuggestionsFetchRequested = ({ value }) => {
 
         const escapedValue = escapeRegexCharacters(value.trim());
@@ -64,7 +76,9 @@ import './react-autocomplete2.css';
                 suggestions : []
             })
         } else {
-          var url = 'http://localhost:4000/api/search/' + escapedValue;
+          // TODO encode value here
+          console.log();
+          var url = 'http://localhost:4000/api/search/' + this.fixedEncodeURIComponent(value);
             request.get(url, function(err, httpResponse, body) {
                 this.setState({
                     suggestions : JSON.parse(body)

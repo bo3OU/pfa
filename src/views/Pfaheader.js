@@ -69,7 +69,7 @@ class Pfaheader extends Component {
       <React.Fragment>
         {/*<AppSidebarToggler className="d-lg-none" display="md" mobile />*/}
 		<Container>
-        <NavbarBrand href="/"><div style={{ fontSize: '18px', color: '#777555' }}>PFA</div></NavbarBrand>
+        <NavbarBrand href="/pfa"><div style={{ fontSize: '18px', color: '#777555' }}>PFA</div></NavbarBrand>
        {/* <AppSidebarToggler className="d-md-down-none" display="lg" /> */}
        <SearchCoin2></SearchCoin2>
        <NavbarToggler onClick={this.toggle} />

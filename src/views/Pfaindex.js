@@ -1,16 +1,10 @@
-import React, { Component } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import React from 'react';
 import { Container } from 'reactstrap';
 import request from 'request';
 import consts from '../consts';
-import util from 'util';
-import { AppHeader } from '@coreui/react';
-// sidebar nav config
-import navigation from '../_nav';
-// routes config
 import TableRow from './TableRow';
 import TableHeader from './TableHeader';
-
+import CoinCard from './coinCard';
 // import request from 'request';
 import {
     Button,
@@ -222,7 +216,6 @@ export default class Pfaindex extends React.Component
 		}
     }
 
-
     refreshValues() {
 		console.log("refresing values");
 		var options = {
@@ -233,15 +226,14 @@ export default class Pfaindex extends React.Component
 		};
 		setTimeout(() => {
 			request.get(options,(err, httpResponse, body) => {	
-				console.log("requestion refresh query");
-				var data = JSON.parse(body);
-				this.setState({          
-					favs : data
-				})
+					console.log("requestion refresh query");
+					var data = JSON.parse(body);
+					this.setState({          
+						favs : data
+					})
 				}
 			);
 		},1000)
-
 	}
 
     render () {
@@ -251,9 +243,9 @@ export default class Pfaindex extends React.Component
             <div>
                 <div className="app">
                     
-                      <Navbar color="light" light expand="sm">
-                          <Pfaheader />
-                      </Navbar>
+					<Navbar color="light" light expand="sm">
+						<Pfaheader />
+					</Navbar>
                       
                     <main className="main">
                         <div className="animated fadeIn">
@@ -261,98 +253,44 @@ export default class Pfaindex extends React.Component
                         <Row>
                         <Col>
                         <Card >  
-                        <CardHeader>
-                            Top Movers
-                        </CardHeader>
+							<CardHeader>
+								Top Movers
+							</CardHeader>
                             <CardBody>
-                            <Row>
-                            <Col xs="12" sm="6" lg="3">
-                            <Card className="text-white bg-danger">
-                            <CardBody className="pb-0">
-                            <ButtonGroup className="float-right">
-                                <ButtonDropdown id='card1' isOpen={this.state.card1} toggle={() => { this.setState({ card1: !this.state.card1 }); }}>
-                                <DropdownToggle caret className="p-0" color="transparent">
-                                    <i className="icon-settings"></i>
-                                </DropdownToggle>
-                                <DropdownMenu right>
-                                    <DropdownItem>Action</DropdownItem>
-                                    <DropdownItem>Another action</DropdownItem>
-                                    <DropdownItem disabled>Disabled action</DropdownItem>
-                                    <DropdownItem>Something else here</DropdownItem>
-                                </DropdownMenu>
-                                </ButtonDropdown>
-                            </ButtonGroup>
-                            <div className="text-value">93.854</div>
-                            <div>Members online</div>
-                            </CardBody>
-                            <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-                            <Line data={cardChartData1} options={cardChartOpts1} height={70} />
-                            </div>
-                            </Card>
-                            </Col>
-                            <Col   xs="12" sm="6" lg="3">
-                            <Card className="text-white bg-success">
-                            <CardBody className="pb-0">
-                            <ButtonGroup className="float-right">
-                                <ButtonDropdown id='card1' isOpen={this.state.card1} toggle={() => { this.setState({ card1: !this.state.card1 }); }}>
-                                <DropdownToggle caret className="p-0" color="transparent">
-                                    <i className="icon-settings"></i>
-                                </DropdownToggle>
-                                <DropdownMenu right>
-                                    <DropdownItem>Action</DropdownItem>
-                                    <DropdownItem>Another action</DropdownItem>
-                                    <DropdownItem disabled>Disabled action</DropdownItem>
-                                    <DropdownItem>Something else here</DropdownItem>
-                                </DropdownMenu>
-                                </ButtonDropdown>
-                            </ButtonGroup>
-                            <div className="text-value">93.854</div>
-                            <div>Members online</div>
-                            </CardBody>
-                            <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-                            <Line data={cardChartData2} options={cardChartOpts2} height={70} />
-                            </div>
-                            </Card>
-                            </Col>
-                            <Col  xs="12" sm="6" lg="3">
-                            <Card className="text-white bg-danger">
-                            <CardBody className="pb-0">
-                            <Button className="float-right btn-danger">
-                                    <i className="icon-heart"></i>
-                            </Button>
-                            <div className="text-value">AAPL</div>
-                            <div>+ 3.56 %</div>
-                            </CardBody>
-                            <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-                            <Line data={cardChartData1} options={cardChartOpts1} height={70} />
-                            </div>
-                            </Card>
-                            </Col>
-                            <Col xs="12" sm="6" lg="3">
-                            <Card className="text-white bg-success">
-                            <CardBody className="pb-0">
-                            <ButtonGroup className="float-right">
-                                <ButtonDropdown id='card1' isOpen={this.state.card1} toggle={() => { this.setState({ card1: !this.state.card1 }); }}>
-                                <DropdownToggle caret className="p-0" color="transparent">
-                                    <i className="icon-settings"></i>
-                                </DropdownToggle>
-                                <DropdownMenu right>
-                                    <DropdownItem>Action</DropdownItem>
-                                    <DropdownItem>Another action</DropdownItem>
-                                    <DropdownItem disabled>Disabled action</DropdownItem>
-                                    <DropdownItem>Something else here</DropdownItem>
-                                </DropdownMenu>
-                                </ButtonDropdown>
-                            </ButtonGroup>
-                            <div className="text-value">93.854</div>
-                            <div>Members online</div>
-                            </CardBody>
-                            <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-                            <Line data={cardChartData2} options={cardChartOpts2} height={70} />
-                            </div>
-                            </Card>
-                            </Col>
-                            </Row>
+								<Row>
+								<Col  xs="12" sm="6" lg="3">
+									<CoinCard 
+										coin={"IOS"}
+										price={"6500"}
+										change24={"-38.54"}
+										data={[630, 670, 600, 635, 660, 640, 651]}>
+									</CoinCard>
+								</Col>
+								<Col  xs="12" sm="6" lg="3">
+									<CoinCard 
+										coin={"BTC"}
+										price={"6500"}
+										change24={"3.54"}
+										data={[630, 670, 600, 635, 660, 640, 651]}>
+									</CoinCard>
+								</Col>
+								<Col  xs="12" sm="6" lg="3">
+									<CoinCard 
+										coin={"ETH"}
+										price={"6500"}
+										change24={"-3.54"}
+										data={[630, 670, 600, 635, 660, 640, 651]}>
+									</CoinCard>
+								</Col>
+								<Col  xs="12" sm="6" lg="3">
+									<CoinCard 
+										coin={"FUK"}
+										price={"2500"}
+										change24={"3.54"}
+										data={[630, 670, 700, 635, 660, 640, 651]}>
+									</CoinCard>
+								</Col>
+								</Row>
                             </CardBody>
                             
                             </Card>  

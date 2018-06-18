@@ -59,7 +59,7 @@ class TableRow extends Component {
                 <td className="text-center" > <div> { approx(this.props.marketcap,{prefix: '$ ', capital: true, round: true}) } </div></td>
                 <td className="text-center" > <strong><div style={{ color : '#228B22' }} > { approx(this.props.volume,{prefix: '$ ', capital: true, round: true}) }</div></strong></td>
                 <td className="text-center" > 
-                    <Button className={this.props.fav == "true" ? "btn-danger" : ""} onClick={() => { this.changeStatus() } } >
+                    <Button className={this.props.fav == "true" ? "btn-danger" : "btn-light"} onClick={() => { this.changeStatus() } } >
                         <i className="icon-heart"></i>
                     </Button>
                 </td>
