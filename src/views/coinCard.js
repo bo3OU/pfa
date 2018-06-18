@@ -81,7 +81,8 @@ const brandDanger = getStyle('--danger')
 class coinCard extends Component {
     constructor() {
         super();
-        this.link = this.link.bind(this)  
+        this.link = this.link.bind(this);
+        console.log("at least called"); 
     }
 
 

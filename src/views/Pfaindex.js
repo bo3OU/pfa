@@ -5,6 +5,7 @@ import consts from '../consts';
 import TableRow from './TableRow';
 import TableHeader from './TableHeader';
 import CoinCard from './coinCard';
+import CardOfCards from './cardOfCards';
 // import request from 'request';
 import {
     Button,
@@ -22,132 +23,8 @@ import {
     Table,
   } from 'reactstrap';
 
-import { Line } from 'react-chartjs-2';
-import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
-import { getStyle } from '@coreui/coreui/dist/js/coreui-utilities';
-
 import Pfaheader from './Pfaheader';
-const brandSuccess = getStyle('--success')
-const brandDanger = getStyle('--danger')
 
-// Card Chart 2
-const cardChartData2 = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    datasets: [
-      {
-        label: 'Price',
-        backgroundColor: brandSuccess,
-        borderColor: 'rgba(255,255,255,.55)',
-        data: [1, 18, 9, 17, 34, 22, 11],
-      },
-    ],
-  };
-
-
-  const cardChartOpts2 = {
-    tooltips: {
-      enabled: false,
-      custom: CustomTooltips
-    },
-    maintainAspectRatio: false,
-    legend: {
-      display: false,
-    },
-    scales: {
-      xAxes: [
-        {
-          gridLines: {
-            color: 'transparent',
-            zeroLineColor: 'transparent',
-          },
-          ticks: {
-            fontSize: 2,
-            fontColor: 'transparent',
-          },
-  
-        }],
-      yAxes: [
-        {
-          display: false,
-          ticks: {
-            display: false,
-            min: Math.min.apply(Math, cardChartData2.datasets[0].data) - 5,
-            max: Math.max.apply(Math, cardChartData2.datasets[0].data) + 5,
-          },
-        }],
-    },
-    elements: {
-      line: {
-        tension: 0.2,
-        borderWidth: 1,
-      },
-      point: {
-        radius: 0,
-        hitRadius: 0,
-        hoverRadius: 0,
-      },
-    },
-  };
-  
-
-  // Card Chart 1
-const cardChartData1 = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    datasets: [
-      {
-        label: 'Price',
-        backgroundColor: brandDanger,
-        borderColor: 'rgba(255,255,255,.55)',
-        data: [1, 18, 9, 17, 34, 22, 11],
-      },
-    ],
-  };
-
-
-  const cardChartOpts1 = {
-    tooltips: {
-      enabled: false,
-      custom: CustomTooltips
-    },
-    maintainAspectRatio: false,
-    legend: {
-      display: false,
-    },
-    scales: {
-      xAxes: [
-        {
-          gridLines: {
-            color: 'transparent',
-            zeroLineColor: 'transparent',
-          },
-          ticks: {
-            fontSize: 2,
-            fontColor: 'transparent',
-          },
-  
-        }],
-      yAxes: [
-        {
-          display: false,
-          ticks: {
-            display: false,
-            min: Math.min.apply(Math, cardChartData2.datasets[0].data) - 5,
-            max: Math.max.apply(Math, cardChartData2.datasets[0].data) + 5,
-          },
-        }],
-    },
-    elements: {
-      line: {
-        tension: 0.2,
-        borderWidth: 1,
-      },
-      point: {
-        radius: 0,
-        hitRadius: 0,
-        hoverRadius: 0,
-      },
-    },
-  };
   
 export default class Pfaindex extends React.Component
 {
@@ -256,41 +133,9 @@ export default class Pfaindex extends React.Component
 							<CardHeader>
 								Top Movers
 							</CardHeader>
-                            <CardBody>
-								<Row>
-								<Col  xs="12" sm="6" lg="3">
-									<CoinCard 
-										coin={"IOS"}
-										price={"6500"}
-										change24={"-38.54"}
-										data={[630, 670, 600, 635, 660, 640, 651]}>
-									</CoinCard>
-								</Col>
-								<Col  xs="12" sm="6" lg="3">
-									<CoinCard 
-										coin={"BTC"}
-										price={"6500"}
-										change24={"3.54"}
-										data={[630, 670, 600, 635, 660, 640, 651]}>
-									</CoinCard>
-								</Col>
-								<Col  xs="12" sm="6" lg="3">
-									<CoinCard 
-										coin={"ETH"}
-										price={"6500"}
-										change24={"-3.54"}
-										data={[630, 670, 600, 635, 660, 640, 651]}>
-									</CoinCard>
-								</Col>
-								<Col  xs="12" sm="6" lg="3">
-									<CoinCard 
-										coin={"FUK"}
-										price={"2500"}
-										change24={"3.54"}
-										data={[630, 670, 700, 635, 660, 640, 651]}>
-									</CoinCard>
-								</Col>
-								</Row>
+							<CardBody>
+								{/*the top movers cards displayed here*/}
+								<CardOfCards></CardOfCards>
                             </CardBody>
                             
                             </Card>  
