@@ -59,32 +59,36 @@ export default class Pfaindex extends React.Component
 	}
 
 	getData() {
-		request.get(consts.url + "api/coin/data?o="+ this.state.page,function(err, httpResponse, body) {
+		request.get(consts.url + "api/coins/data?o="+ this.state.page,function(err, httpResponse, body) {
 			var data = JSON.parse(body);
-			this.setState({          
-				data : data,
-				precedent: this.state.page > 1 ? true : false,
-				next:this.state.page < 9 ? true : false,
-			})
+			if(data != ''){
+				this.setState({          
+					data : data,
+					precedent: this.state.page > 1 ? true : false,
+					next:this.state.page < 9 ? true : false,
+				})
+			}
+			// if (this.state.data == [] && )
+			// check for 500 status :/
 			}.bind(this));	
 	}
 
     //async componentDidMount(){
-	async componentDidMount(){
+	 componentDidMount(){
 		this.getData();
-		try {
-			setInterval(async () => {
+		// try {
+		// 	setInterval(async () => {
 				this.getData();	
 				this.setState({
 					dataFull: true
 				});
-			}, 1000);
+			// }, 1000);
 			if (localStorage.getItem("webToken") !== null){
 				this.getFavs();
 			}
-		} catch(e) {
-			console.log(e);
-		}
+		// } catch(e) {
+		// 	console.log(e);
+		//}
 	}
 
     loadingSpinner() {
@@ -125,15 +129,13 @@ export default class Pfaindex extends React.Component
 	nextPage() {
 		this.setState({
 			page:(this.state.page + 1) > 9 ? this.state.page : this.state.page + 1
-		})
-		this.getData();
+		},() => { this.getData(); })	
 	}
 
 	previousPage() {
 		this.setState({
 			page:(this.state.page - 1) < 1 ? this.state.page : this.state.page - 1
-		})
-		this.getData();
+		},() => { this.getData(); })	
 	}
 
     render () {

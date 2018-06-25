@@ -11,6 +11,7 @@ import {
     Card,
     CardBody,
   } from 'reactstrap';
+import { stringify } from 'querystring';
 
 const brandSuccess = getStyle('--success')
 const brandDanger = getStyle('--danger')
@@ -76,26 +77,33 @@ const brandDanger = getStyle('--danger')
       },
     },
   }};
-  
 
 class coinCard extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        this.getData = this.getData.bind(this);
         this.link = this.link.bind(this);
-        console.log("at least called"); 
         this.state = ({
           data: []
         })
+        this.getData(this.props.coin)
+        
     }
 
-    getData() {
-      request.get('',function(err,request, body) {
-        var data = JSON.parse(body);
+  
+    getData(name) {
+      request.get('https://min-api.cryptocompare.com/data/histohour?fsym=' + name + '&tsym=USD&limit=8',function(err,request, body) {
+        var array = [];
+        JSON.parse(body).Data.forEach(function(v){ 
+          array.push(v.close);
+         });
         this.setState({
-          data: data
+          data: array
         })
       }.bind(this))
     }
+  
+
 
     link() {
         window.location.replace(consts.myurl + "coin/" + this.props.coin);
@@ -106,12 +114,12 @@ class coinCard extends Component {
         return (
             <Card className={(parseFloat(this.props.change24) > 0 ? "bg-success":"bg-danger") + " text-white CardPointer"} onClick={this.link}>
                 <CardBody className="pb-0">
-                    <div className=" float-right"> { this.props.price } </div>
+                    <div className=" float-right"> { parseFloat(this.props.price) } </div>
                     <div className="text-value"> { this.props.coin } </div>
                     <div>{(parseFloat(this.props.change24) > 0 ? "+ " + this.props.change24 : "- " + this.props.change24.substr(1)) } %</div>
                 </CardBody>
                 <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-                    <Line data={cardChartData1(this.props.change24,this.props.data)} options={cardChartOpts1(this.props.data)} height={70} />
+                    <Line data={cardChartData1(this.props.change24,this.state.data)} options={cardChartOpts1(this.state.data)} height={70} />
                 </div>
             </Card>
         );

@@ -30,7 +30,6 @@ import './react-autocomplete2.css';
           {
             parts.map((part, index) => {
               const className = part.highlight ? 'highlight' : null;
-              console.log("cryptocompare.com" + suggestion.image);
               return (
                 <span className={className} key={index}>{part.text}</span>
               );
@@ -78,7 +77,7 @@ import './react-autocomplete2.css';
         } else {
           // TODO encode value here
           console.log();
-          var url = 'http://localhost:4000/api/search/' + this.fixedEncodeURIComponent(value);
+          var url = consts.url + "api/search/" + this.fixedEncodeURIComponent(value);
             request.get(url, function(err, httpResponse, body) {
                 this.setState({
                     suggestions : JSON.parse(body)

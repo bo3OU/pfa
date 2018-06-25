@@ -55,7 +55,7 @@ class TableRow extends Component {
                     </div>
                 </td>
                 <td  ><strong>{ this.props.fullname }</strong></td>
-                <td className="text-center" > <div> { this.props.price } </div></td>
+                <td className="text-center" > <div> { parseFloat(this.props.price) } </div></td>
                 <td className="text-center" > <div> { approx(this.props.marketcap,{prefix: '$ ', capital: true, round: true}) } </div></td>
                 <td className="text-center" > <strong><div style={{ color : '#228B22' }} > { approx(this.props.volume,{prefix: '$ ', capital: true, round: true}) }</div></strong></td>
                 <td className="text-center" > 
