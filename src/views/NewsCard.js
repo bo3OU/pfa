@@ -4,6 +4,7 @@ import {
     CardBody,
     Row, 
     Col,
+    Container,
 } from 'reactstrap';
 
 
@@ -26,21 +27,23 @@ class NewsCard extends Component {
             <Col xs="12" sm="12" lg="12">
                 <Card>
                     <CardBody>
-                        <Row>
-                            <Col lg="3">
-                            <img src={this.props.image}></img>
-                            </Col>
-                            <Col lg="9">
-                                <Row>
-                                    <strong>
-                                        <a href={this.props.url}>{ this.props.title }</a> 
-                                    </strong>
-                                </Row>
-                                <Row>
-                                    { this.props.overview }
-                                </Row>
-                            </Col>
-                        </Row>
+                        <Container>
+                            <Row>
+                                <Col lg="2" md="5">
+                                    <img src={this.props.image} style={{height: "150px",width: "150px"}}></img>
+                                </Col>
+                                <Col lg="10" md="7">
+                                    <Row>
+                                        <strong>
+                                            <a href={this.props.url}>{ this.props.title }</a> 
+                                        </strong>
+                                    </Row>
+                                    <Row>
+                                        { this.props.overview }
+                                    </Row>
+                                </Col>
+                            </Row>
+                        </Container>
                     </CardBody>
                 </Card> 
                 </Col>

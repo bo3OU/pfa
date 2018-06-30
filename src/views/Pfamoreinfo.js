@@ -1,9 +1,5 @@
-import React, { Component } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import React from 'react';
 import { Container } from 'reactstrap';
-import { AppHeader } from '@coreui/react';
-// sidebar nav config
-import navigation from '../_nav';
 // routes config
 
 import {
@@ -16,58 +12,37 @@ import {
   CardBody,
   CardFooter,
   CardHeader,
-  CardTitle,
   Col,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
   Navbar,
-  Progress,
   Row,
-  Table,
 } from 'reactstrap';
 
 import { Line } from 'react-chartjs-2';
-import DefaultHeader from '../containers/DefaultLayout/DefaultHeader';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
 
 import consts from '../consts';
 import request from 'request';
 import Pfaheader from './Pfaheader';
-const brandSuccess = getStyle('--success')
-const brandDanger = getStyle('--danger')
 const brandInfo = getStyle('--info')
 
-//Random Numbers
-function random(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-var elements = 27;
-var data1 = [];
-
-for (var i = 0; i <= elements; i++) {
-  data1.push(random(50, 200));
-}
-
-function mainChart(){
+function mainChart(labels,data){
+  console.log(labels.length);
 	return ({
-		labels: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
-		datasets: [
+    labels: labels,
+    datasets: [
 			{
-				label: 'My First dataset',
+				label: 'Price :',
 				backgroundColor: hexToRgba(brandInfo, 10),
 				borderColor: brandInfo,
 				pointHoverBackgroundColor: '#fff',
 				borderWidth: 2,
-				data: data1,
+				data: data,
 			}
 		],
 })};
 
-function mainChartOpts(){
+function mainChartOpts(min,max){
   	return ({
 		tooltips: {
 		enabled: false,
@@ -88,18 +63,19 @@ function mainChartOpts(){
 		scales: {
 		xAxes: [
 			{
-				gridLines: {
-					drawOnChartArea: false,
-				},
+			gridLines: {
+				drawOnChartArea: false,
+			},
 			}],
 		yAxes: [
 			{
-				ticks: {
-					beginAtZero: true,
-					maxTicksLimit: 5,
-					stepSize: Math.ceil(250 / 5),
-					max: 250,
-				},
+			ticks: {
+				beginAtZero: false,
+				maxTicksLimit: 100,
+				stepSize: Math.ceil((max -min)/ 10),
+				min: min - (max - min) / 20,
+				max: max + (max - min) / 20,
+			},
 			}],
 		},
 		elements: {
@@ -129,7 +105,9 @@ export default class Pfamoreinfo extends React.Component {
     super(props);
     this.state = {
       dropdownOpen: false,
-      data: []
+      data: [],
+      labels: [],
+      prices:[]
     };
     // this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
     this.getData()
@@ -168,15 +146,33 @@ export default class Pfamoreinfo extends React.Component {
       radioSelected: number,
     })
     request.get( consts.url +'api/hist/'+ coin +'/'+ time +'/',function(error,response,body) {
+
       if(error) {
         if(this.state.data == []) {
           window.location.replace(consts.myurl + "500");
         }
       }
       body = JSON.parse(body);
-      this.setState({
-        data: body,
+
+      var prices = [];
+      var labels = [];
+
+
+      body.forEach(v => {
+        prices.push(v.close)
+        labels.push(v.time)
       });
+
+      var minValue= Math.min.apply(Math,prices);
+      var maxValue= Math.max.apply(Math,prices);
+
+      this.setState({
+        prices: prices,
+        labels: labels,
+        min: minValue,
+        max: maxValue,
+      });
+
     }.bind(this))
   }
 
@@ -211,24 +207,26 @@ export default class Pfamoreinfo extends React.Component {
                                 <Col sm="7" className="d-none d-sm-inline-block">
                                   <Button color="danger" className="float-right"><i className="fa fa-heart"></i></Button>
                                   <ButtonToolbar className="float-right" aria-label="Toolbar with button groups">
-                                    <ButtonGroup className="mr-3" aria-label="First group">
-                                      <Button color="outline-secondary" onClick={() => this.onRadioBtnClick(1,this.coin,"day")} active={this.state.radioSelected === 1}>Day</Button>
-                                      <Button color="outline-secondary" onClick={() => this.onRadioBtnClick(2,this.coin,"week")} active={this.state.radioSelected === 2}>Week</Button>
-                                      <Button color="outline-secondary" onClick={() => this.onRadioBtnClick(3,this.coin,"month")} active={this.state.radioSelected === 3}>Month</Button>
+									<ButtonGroup className="mr-3" aria-label="First group">
+										<Button color="outline-secondary" onClick={() => this.onRadioBtnClick(1,this.coin,"hour")} active={this.state.radioSelected === 1}>Hour</Button>
+										<Button color="outline-secondary" onClick={() => this.onRadioBtnClick(2,this.coin,"day")} active={this.state.radioSelected === 2}>Day</Button>
+										<Button color="outline-secondary" onClick={() => this.onRadioBtnClick(3,this.coin,"week")} active={this.state.radioSelected === 3}>Week</Button>
+										<Button color="outline-secondary" onClick={() => this.onRadioBtnClick(4,this.coin,"month")} active={this.state.radioSelected === 4}>Month</Button>
+										<Button color="outline-secondary" onClick={() => this.onRadioBtnClick(5,this.coin,"year")} active={this.state.radioSelected === 5}>Year</Button>
                                     </ButtonGroup>
                                   </ButtonToolbar>
                                 </Col>
                               </Row>
                               <div className="chart-wrapper" style={{ height: 300 + 'px', marginTop: 40 + 'px' }}>
-                                <Line data={mainChart()} options={mainChartOpts()} height={300} />
+                                <Line data={mainChart(this.state.labels,this.state.prices)} options={mainChartOpts(this.state.min,this.state.max)} height={300} />
                               </div>
                             </CardBody>
                             <CardFooter>
                               <Row className="text-center">
                               { getSmallCard("Market Cap",this.state.marketcap)}
                               { getSmallCard("Volume",this.state.volume) }
-                              { getSmallCard("Price",parseFloat(this.state.price)) }
-                              { getSmallCard("Change in 24H",parseFloat(this.state.change24)) }
+                              { getSmallCard("Price",parseFloat(this.state.price).toString()) }
+                              { getSmallCard("Change in 24H",parseFloat(this.state.change24).toString()) }
                               { getSmallCard("Algorithm",this.state.algorithm) }
                               { getSmallCard("Proof type",this.state.prooftype) }
                               </Row>
