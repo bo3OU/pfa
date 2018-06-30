@@ -176,10 +176,10 @@ export default class Pfaindex extends React.Component
 								<Row>
 								<Col>
 								<ButtonGroup className="float-right">
-									<Link to="/pfa">
+									<Link to="/">
 										<Button  className="page-link" style={{visibility : this.state.precedent ? 'visible' : 'hidden'}} onClick={this.previousPage}> precedent </Button>
 									</Link>
-									<Link to="/pfa">
+									<Link to="/">
 										<Button className="page-link" style={{visibility : this.state.next ? 'visible' : 'hidden'}} onClick={this.nextPage}> next</Button>
 									</Link>
 								</ButtonGroup>

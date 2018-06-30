@@ -7,7 +7,7 @@ class Login extends Component {
 	constructor() {
 		super();
 		if (localStorage.getItem("webToken") !== null) {
-			window.location.replace(consts.myurl + "pfa");
+			window.location.replace(consts.myurl + "/");
 		}
 		this.state = {
 			login: '',
@@ -26,7 +26,7 @@ class Login extends Component {
 				console.log(data);
 				if(data.token){
 					localStorage.setItem("webToken", data.token)
-					window.location.replace(consts.myurl + "pfa");
+					window.location.replace(consts.myurl + "/");
 				}
 		}.bind(this))
 	}
