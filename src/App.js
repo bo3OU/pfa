@@ -26,7 +26,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route exact path="/pfa" name="Homepage" component={Pfaindex} />
+          <Route exact path="/" name="Homepage" component={Pfaindex} />
           <Route exact path="/coin/:coin" name="Homepage" component={Pfamoreinfo} />
           <Route exact path="/news" name="news" component={PfaNews} />
           <Route exact path="/login" name="Login Page" component={Login} />
@@ -34,7 +34,7 @@ class App extends Component {
           <Route exact path="/404" name="Page 404" component={Page404} />
           <Route exact path="/500" name="Page 500" component={Page500} />
 
-          <Route path="/" name="Home" component={DefaultLayout} />
+          <Route path="/" name="Home" component={Pfaindex} />
         </Switch>
       </BrowserRouter>
     );
