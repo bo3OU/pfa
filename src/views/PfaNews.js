@@ -1,84 +1,84 @@
 import React, { Component } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import request from 'request';
 import consts from '../consts';
-import { AppHeader } from '@coreui/react';
-// sidebar nav config
-import navigation from '../_nav';
-// routes config
-
+import { Link } from 'react-router-dom'
 import NewsCard from './NewsCard';
 // import request from 'request';
 import {
-    Badge,
     Button,
-    ButtonDropdown,
     ButtonGroup,
-    ButtonToolbar,
-    Card,
-    CardBody,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-    Col,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownToggle,
     Navbar,
     Row,
-    Table,
+    Col,    
   } from 'reactstrap';
 
 import Pfaheader from './Pfaheader';
 
   
-export default class Pfaindex extends Component
+export default class PfaNews extends Component
 {
     constructor(props) {
         super(props);
-    
-        //this.toggle = this.toggle.bind(this);
-    
+        this.nextPage = this.nextPage.bind(this);
+		this.previousPage = this.previousPage.bind(this);    
         this.state = {
           dropdownOpen: false,
-          data : [{
-                    "name": "",
-                    "price": "",
-					"marketcap": "Loading",
-					"image": "",
-					"fullname": "",
-					"volume": ""
-                }]
+          precedent: false,
+          next: true,
+          page: 1,
+          limit: 20,
+          count: 100,
+          data : [],
         };
     }
-    getCard() {
-        return (
-            <div></div>
-        )
+
+    getData () {
+        request.get(consts.url + "api/news?o="+ this.state.page,function(err, httpResponse, body) {
+            if(err || httpResponse.statusCode == 500)
+                window.location.replace(consts.myurl + "500");
+            else if(httpResponse.statusCode == 404)
+                window.location.replace(consts.myurl + "404");
+            else if(httpResponse.statusCode == 200) {
+                var data = JSON.parse(body);
+                console.log(this.state.count);
+                this.setState({          
+                    data : data.rows,
+                    count: data.count,
+                    limit: data.limit,
+                    precedent: this.state.page > 1 ? true : false,
+					next: 	((this.state.page + 1) * this.state.limit < this.state.count) ? true : false,
+                })
+            }
+        }.bind(this));
     }
     //async componentDidMount(){
     componentDidMount(){
       try {
         //setInterval(async () => {
-			request.get(consts.url + "api/news",function(err, httpResponse, body) {
-                if(body) {
-                    var data = JSON.parse(body);
-                    this.setState({          
-                        data : data
-                    })
-                }
-			}.bind(this));
+        this.getData()
         //}, 2000);
       } catch(e) {
         console.log(e);
       }
     //Call THE API 
     }
+
+	nextPage() {
+		this.setState({
+            //page:(this.state.page + 1) * this.state.limit > this.state.count ? this.state.page : this.state.page + 1
+            page:this.state.page + 1
+		},() => { this.getData(); })	
+	}
+
+	previousPage() {
+		this.setState({
+            //page:(this.state.page - 1) < 1 ? this.state.page : this.state.page - 1
+            page:this.state.page - 1
+		},() => { this.getData(); })	
+	}
+
     render () {
-
-
         return (
             <div>
                 <div className="app">
@@ -90,6 +90,20 @@ export default class Pfaindex extends Component
                     <main className="main">
                         <div className="animated fadeIn">
                         <Container style = {{marginTop: 40 + "px"}} >
+                        <Row >
+                            <Col lg="9">
+                            </Col>
+                            <Col lg="3" style = {{marginBottom: 40 + "px"}}>
+                                <ButtonGroup className="float-right">
+                                    <Link to="/news">
+                                        <Button  className="page-link" style={{visibility : this.state.precedent ? 'visible' : 'hidden'}} onClick={this.previousPage}> precedent </Button>
+                                    </Link>
+                                    <Link to="/news">
+                                        <Button className="page-link" style={{visibility : this.state.next ? 'visible' : 'hidden'}} onClick={this.nextPage}> next</Button>
+                                    </Link>
+                                </ButtonGroup>
+                            </Col>
+                        </Row>
                         {     
                             this.state.data.map(function(item,key){
                                 return (

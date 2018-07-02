@@ -79,9 +79,15 @@ import './react-autocomplete2.css';
           console.log();
           var url = consts.url + "api/search/" + this.fixedEncodeURIComponent(value);
             request.get(url, function(err, httpResponse, body) {
-                this.setState({
-                    suggestions : JSON.parse(body)
-                })
+                if(err || httpResponse.statusCode == 500)
+                    window.location.replace(consts.myurl + "500");
+                else if(httpResponse.statusCode == 404)
+                    window.location.replace(consts.myurl + "404");
+                else if(httpResponse.statusCode == 200) {
+                    this.setState({
+                        suggestions : JSON.parse(body)
+                    })
+                }
             }.bind(this));
         }
     };

@@ -14,12 +14,6 @@ class AccountSection extends Component {
   }
 
   componentDidMount() {
-    request.get(consts.url + "").then(function() {
-        this.setState({
-      
-        });
-    });
-
   }
 
   render() {

@@ -18,10 +18,15 @@ class cardOfCards extends Component {
     
     componentDidMount() {
         request(consts.url + "api/mostchanged", function(err, httpResponse, body) {
-            console
-            this.setState({
-                data: JSON.parse(body)
-            })
+            if(err || httpResponse.statusCode == 500)
+                window.location.replace(consts.myurl + "500");
+            else if(httpResponse.statusCode == 404)
+                window.location.replace(consts.myurl + "404");
+            else if(httpResponse.statusCode == 200) {
+                this.setState({
+                    data: JSON.parse(body)
+                })
+            }
         }.bind(this))
     }
 

@@ -17,21 +17,28 @@ class Register extends Component {
       message: '',
     };
 }
-register() {
-  request.post(consts.url + "/register", {form:{
-    login: this.state.login,
-    password: this.state.password,
-    email: this.state.email,
-    passwordver: this.state.passwordver,
-  }}, function (err,httpResponse,body){
-    var data = JSON.parse(body);
-    this.setState({message: data.error})
-    if(httpResponse.statusCode == 201) {
-      window.location.replace(consts.myurl + "login");
+    register() {
+        request.post(consts.url + "register", {form:{
+                login: this.state.login,
+                password: this.state.password,
+                email: this.state.email,
+                passwordver: this.state.passwordver,
+            }}, function (err,httpResponse,body){
+        if(err || httpResponse.statusCode == 500)
+            window.location.replace(consts.myurl + "500");
+        else if(httpResponse.statusCode == 404)
+            window.location.replace(consts.myurl + "404");
+        else if(httpResponse.statusCode == 200) { 
+            var data = JSON.parse(body);
+            this.setState({message: data.error})
+            if(httpResponse.statusCode == 201) {
+            window.location.replace(consts.myurl + "login");
+            }
+        }
+        }.bind(this))
     }
-  }.bind(this))
-}
-  render() {
+
+    render() {
     return (
       <div className="app flex-row align-items-center">
         <Container>

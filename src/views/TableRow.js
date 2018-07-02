@@ -20,29 +20,42 @@ class TableRow extends Component {
             };
             console.log("sending request " +this.props.id );
             request.post(options,function(err, httpResponse, body) {
-                var data = JSON.parse(body);
-                //test if it was really created
-                }.bind(this)
-            );
-            this.props.refreshValues();
-        } else {
-            //delete favorite
-            var options = {
-                url: consts.url + "api/fav/"+this.props.id ,
-                headers: {
-                    'Authorization': "Bearer " + localStorage.getItem("webToken")
+                if(err || httpResponse.statusCode == 500)
+                    window.location.replace(consts.myurl + "500");
+                else if(httpResponse.statusCode == 404)
+                    window.location.replace(consts.myurl + "404");
+                else if(httpResponse.statusCode == 200) {
+                    var data = JSON.parse(body);
+                    if (data.created)
+                        this.props.refreshValues();
                 }
-            };
-            console.log("sending request " +this.props.id );
-            request.delete(options,function(err, httpResponse, body) {
-                console.log("sending delete query");
-                var data = JSON.parse(body);
-                //test if it was deleted
                 }.bind(this)
             );
-            this.props.refreshValues();
+            
+            } else {
+                //delete favorite
+                var options = {
+                    url: consts.url + "api/fav/"+this.props.id ,
+                    headers: {
+                        'Authorization': "Bearer " + localStorage.getItem("webToken")
+                    }
+                };
+                request.delete(options,function(err, httpResponse, body) {
+                    if(err || httpResponse.statusCode == 500)
+                        window.location.replace(consts.myurl + "500");
+                    else if(httpResponse.statusCode == 404)
+                        window.location.replace(consts.myurl + "404");
+                    else if(httpResponse.statusCode == 200) {
+                        var data = JSON.parse(body);
+                        if (data.destroyed)
+                            this.props.refreshValues();    
+                        }
+                    }.bind(this)
+                );
+            }
+        } else {
+            // TODO show notification or send to login
         }
-    }
     }
 
     render() {

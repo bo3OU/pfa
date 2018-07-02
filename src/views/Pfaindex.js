@@ -11,7 +11,6 @@ import { Link } from 'react-router-dom'
 // import request from 'request';
 import {
     Button,
-    ButtonDropdown,
     ButtonGroup,
     Card,
     CardBody,
@@ -35,7 +34,8 @@ export default class Pfaindex extends React.Component
 			dataFull : false,
 			precedent: false,
 			next: true,
-			page: 1
+			page: 1,
+			limit: 100,
 		};
 		this.refreshValues = this.refreshValues.bind(this);
 		this.nextPage = this.nextPage.bind(this);
@@ -50,45 +50,55 @@ export default class Pfaindex extends React.Component
 			}
 		};
 		request.get(options,function(err, httpResponse, body) {
-			var data = JSON.parse(body);
-			this.setState({          
-				favs : data
-			})
-			}.bind(this)
+            if(err || httpResponse.statusCode == 500)
+                window.location.replace(consts.myurl + "500");
+            else if(httpResponse.statusCode == 404)
+                window.location.replace(consts.myurl + "404");
+            else if(httpResponse.statusCode == 200) {
+                var data = JSON.parse(body);
+                this.setState({          
+                    favs : data
+                })
+            }
+		}.bind(this)
 		);
 	}
 
 	getData() {
+        
 		request.get(consts.url + "api/coins/data?o="+ this.state.page,function(err, httpResponse, body) {
-			var data = JSON.parse(body);
-			if(data != ''){
-				this.setState({          
-					data : data,
-					precedent: this.state.page > 1 ? true : false,
-					next:this.state.page < 9 ? true : false,
-				})
-			}
-			// if (this.state.data == [] && )
-			// check for 500 status :/
-			}.bind(this));	
+            if(err || httpResponse.statusCode == 500)
+                if(this.state.data.length == 0)
+                    window.location.replace(consts.myurl + "500");
+            else if(httpResponse.statusCode == 404)
+                window.location.replace(consts.myurl + "404");
+            else if(httpResponse.statusCode == 200) {
+			    var data = JSON.parse(body);
+                this.setState({          
+                    data : data.rows,
+                    count: data.count,
+                    limit: data.limit,
+                    precedent: this.state.page > 1 ,
+                    next: 	(this.state.page + 1) * this.state.limit < this.state.count ,
+                })
+            }
+			}.bind(this)); 
 	}
 
-    //async componentDidMount(){
-	 componentDidMount(){
+    async componentDidMount(){
 		this.getData();
-		// try {
-		// 	setInterval(async () => {
+		 try {
+		 	setInterval(async () => {
 				this.getData();	
 				this.setState({
 					dataFull: true
 				});
-			// }, 1000);
+			}, 2000);
 			if (localStorage.getItem("webToken") !== null){
 				this.getFavs();
 			}
-		// } catch(e) {
-		// 	console.log(e);
-		//}
+		} catch(e) {
+        }
 	}
 
     loadingSpinner() {
@@ -101,7 +111,6 @@ export default class Pfaindex extends React.Component
 		else {
 			return (
 				<div>
-				
 				</div>
 			);
 		}
@@ -115,20 +124,24 @@ export default class Pfaindex extends React.Component
 			}
 		};
 		setTimeout(() => {
-			request.get(options,(err, httpResponse, body) => {	
-					console.log("requestion refresh query");
-					var data = JSON.parse(body);
-					this.setState({          
-						favs : data
-					})
-				}
-			);
+			request.get(options,(err, httpResponse, body) => {
+                if(err || httpResponse.statusCode == 500)
+                    window.location.replace(consts.myurl + "500");
+                else if(httpResponse.statusCode == 404)
+                    window.location.replace(consts.myurl + "404");
+                else if(httpResponse.statusCode == 200) {
+                    var data = JSON.parse(body);
+                    this.setState({          
+                        favs : data
+                    })
+                }
+            });
 		},1000)
 	}
 
 	nextPage() {
 		this.setState({
-			page:(this.state.page + 1) > 9 ? this.state.page : this.state.page + 1
+			page:(this.state.page + 1) * this.state.limit > this.state.count ? this.state.page : this.state.page + 1
 		},() => { this.getData(); })	
 	}
 
@@ -139,16 +152,12 @@ export default class Pfaindex extends React.Component
 	}
 
     render () {
-
-
         return (
             <div>
                 <div className="app">
-                    
 					<Navbar color="light" light expand="sm">
 						<Pfaheader />
 					</Navbar>
-                      
                     <main className="main">
                         <div className="animated fadeIn">
                         <Container style = {{marginTop: 40 + "px"}} >
@@ -162,7 +171,6 @@ export default class Pfaindex extends React.Component
 									{/*the top movers cards displayed here*/}
 									<CardOfCards></CardOfCards>
 								</CardBody>
-								
 								</Card>  
 							</Col>
                         </Row>
@@ -175,14 +183,14 @@ export default class Pfaindex extends React.Component
 								<CardBody>
 								<Row>
 								<Col>
-								<ButtonGroup className="float-right">
-									<Link to="/">
-										<Button  className="page-link" style={{visibility : this.state.precedent ? 'visible' : 'hidden'}} onClick={this.previousPage}> precedent </Button>
-									</Link>
-									<Link to="/">
-										<Button className="page-link" style={{visibility : this.state.next ? 'visible' : 'hidden'}} onClick={this.nextPage}> next</Button>
-									</Link>
-								</ButtonGroup>
+									<ButtonGroup className="float-right">
+										<Link to="/">
+											<Button  className="page-link" style={{visibility : this.state.precedent ? 'visible' : 'hidden'}} onClick={this.previousPage}> precedent </Button>
+										</Link>
+										<Link to="/">
+											<Button className="page-link" style={{visibility : this.state.next ? 'visible' : 'hidden'}} onClick={this.nextPage}> next</Button>
+										</Link>
+									</ButtonGroup>
 								</Col>
 								</Row>
 								<Row>

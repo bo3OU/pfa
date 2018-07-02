@@ -18,16 +18,22 @@ class Login extends Component {
   
 	signin() {
 		request.post(consts.url + "login", {form:{
-			login: this.state.login,
-			password: this.state.password
+        login: this.state.login,
+        password: this.state.password
 			}}, function (err,httpResponse,body){
-				var data = JSON.parse(body);
-				this.setState({message: data.error})
-				console.log(data);
-				if(data.token){
-					localStorage.setItem("webToken", data.token)
-					window.location.replace(consts.myurl + "/");
-				}
+        if(err || httpResponse.statusCode == 500)
+          window.location.replace(consts.myurl + "500");
+        else if(httpResponse.statusCode == 404)
+          window.location.replace(consts.myurl + "404");
+        else if(httpResponse.statusCode == 200) {
+          var data = JSON.parse(body);
+          this.setState({message: data.error})
+          console.log(data);
+          if(data.token){
+            localStorage.setItem("webToken", data.token)
+            window.location.replace(consts.myurl + "/");
+          }
+        }
 		}.bind(this))
 	}
   
