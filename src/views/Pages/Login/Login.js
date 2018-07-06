@@ -73,6 +73,12 @@ class Login extends Component {
                       <Col xs="6" className="text-right">
                         <Button color="link" className="px-0" href="/register">Register?</Button>
                       </Col>
+                      
+                    </Row>
+                    <Row >                      
+                        <Col className="text-right">
+                            <Button color="link" className="px-0" href="/">Continue without login</Button>
+                        </Col>
                     </Row>
                   </CardBody>
                 </Card>

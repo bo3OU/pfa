@@ -5,7 +5,7 @@ import request from 'request';
 import consts from '../consts';
 
 
-class TableRow extends Component {
+class TableRow1 extends Component {
 
 
     changeStatus() {
@@ -72,10 +72,13 @@ class TableRow extends Component {
                         <img src={"http://www.cryptocompare.com/" + this.props.image} className="img-avatar" alt="" />
                     </div>
                 </td>
-                <td  ><strong>{ this.props.fullname }</strong></td>
-                <td className="text-center" > <strong><div style={this.getColor(this.props.change24)}> { parseFloat(this.props.price) } </div></strong></td>
+                <td  ><strong><div style={this.getColor(this.props.change24)} > { this.props.fullname }</div></strong></td>
+                <td className="text-center" > <div> { parseFloat(this.props.open) } </div></td>
+                <td className="text-center" > <div> { parseFloat(this.props.close) } </div></td>
+                <td className="text-center" > <div> { parseFloat(this.props.high) } </div></td>
+                <td className="text-center" > <div> { parseFloat(this.props.low) } </div></td>
                 <td className="text-center" > <div> { approx(this.props.marketcap,{prefix: '$ ', capital: true, round: true}) } </div></td>
-                <td className="text-center" >  { approx(this.props.volume,{prefix: '$ ', capital: true, round: true}) }</td>
+                <td className="text-center" > <strong>{ approx(this.props.volume,{prefix: '$ ', capital: true, round: true}) }</strong></td>
                 <td className="text-center" > 
                     <Button className={this.props.fav == "true" ? "btn-danger" : "btn-light"} onClick={() => { this.changeStatus() } } >
                         <i className="icon-heart"></i>
@@ -86,4 +89,4 @@ class TableRow extends Component {
     }
 }
 
-export default TableRow;
+export default TableRow1;

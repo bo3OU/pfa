@@ -31,9 +31,9 @@ class Register extends Component {
         else if(httpResponse.statusCode == 200) { 
             var data = JSON.parse(body);
             this.setState({message: data.error})
-            if(httpResponse.statusCode == 201) {
+        } else if(httpResponse.statusCode == 201) {
+            console.log("salam");
             window.location.replace(consts.myurl + "login");
-            }
         }
         }.bind(this))
     }

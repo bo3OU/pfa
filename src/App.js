@@ -19,6 +19,7 @@ import { Login, Page404, Page500, Register } from './views/Pages';
 import Pfaindex from './views/Pfaindex';
 import Pfamoreinfo from './views/Pfamoreinfo';
 import PfaNews from './views/PfaNews';
+import PfaFavs from './views/PfaFavs';
 // import { renderRoutes } from 'react-router-config';
 
 class App extends Component {
@@ -27,7 +28,8 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" name="Homepage" component={Pfaindex} />
-          <Route exact path="/coin/:coin" name="Homepage" component={Pfamoreinfo} />
+          <Route exact path="/coin/:coin" name="Coin" component={Pfamoreinfo} />
+          <Route exact path="/favorites" name="Favorites" component={PfaFavs} />
           <Route exact path="/news" name="news" component={PfaNews} />
           <Route exact path="/login" name="Login Page" component={Login} />
           <Route exact path="/register" name="Register Page" component={Register} />

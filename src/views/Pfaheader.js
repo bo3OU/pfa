@@ -45,7 +45,7 @@ class Pfaheader extends Component {
 			Account
 			</DropdownToggle>
 			<DropdownMenu right>
-			<DropdownItem>
+			<DropdownItem href="/favorites">
 				Favorites
 			</DropdownItem>
 			<DropdownItem onClick={this.logout}>

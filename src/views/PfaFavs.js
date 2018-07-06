@@ -2,8 +2,8 @@ import React from 'react';
 import { Container } from 'reactstrap';
 import request from 'request';
 import consts from '../consts';
-import TableRow from './TableRow';
-import TableHeader from './TableHeader';
+import TableRow1 from './TableRow1';
+import TableHeader1 from './TableHeader1';
 import ReactLoading	from 'react-loading';
 import CardOfCards from './cardOfCards';
 import { Link } from 'react-router-dom'
@@ -24,7 +24,7 @@ import {
 import Pfaheader from './Pfaheader';
 
   
-export default class Pfaindex extends React.Component
+export default class PfaFavs extends React.Component
 {
     constructor(props) {
         super(props);    
@@ -45,7 +45,7 @@ export default class Pfaindex extends React.Component
 	
 	getFavs() {
 		var options = {
-			url: consts.url + "api/favs",
+			url: consts.url + "api/fullfavs",
 			headers: {
 				'Authorization': "Bearer " + localStorage.getItem("webToken")
 			}
@@ -112,7 +112,7 @@ export default class Pfaindex extends React.Component
 
     refreshValues() {
 		var options = {
-			url: consts.url + "api/favs",
+			url: consts.url + "api/fullfavs",
 			headers: {
 			'Authorization': "Bearer " + localStorage.getItem("webToken")
 			}
@@ -155,50 +155,28 @@ export default class Pfaindex extends React.Component
                     <main className="main">
                         <div className="animated fadeIn">
                         <Container style = {{marginTop: 40 + "px"}} >
-                        <Row>
-							<Col>
-								<Card >  
-								<CardHeader>
-									Top Movers
-								</CardHeader>
-								<CardBody>
-									{/*the top movers cards displayed here*/}
-									<CardOfCards></CardOfCards>
-								</CardBody>
-								</Card>  
-							</Col>
-                        </Row>
 						<Row>
 							<Col>
 							<Card> 
 							<CardHeader>	
-								Coins List
+								Favorites
 							</CardHeader> 
 								<CardBody>
 								<Row>
 								<Col>
-									<ButtonGroup className="float-right" style={{marginBottom: '20px'}}>
-										<Link to="/" >
-											<Button  className="page-link" style={{visibility : this.state.precedent ? 'visible' : 'hidden'}} onClick={this.previousPage}> precedent </Button>
-										</Link>
-										<Link to="/">
-											<Button className="page-link" style={{visibility : this.state.next ? 'visible' : 'hidden'}} onClick={this.nextPage}> next</Button>
-										</Link>
-									</ButtonGroup>
-								</Col>
-								</Row>
-								<Row>
-								<Col>
 									<Table hover responsive borderless className="table-outline">
-										<TableHeader></TableHeader>
+										<TableHeader1></TableHeader1>
 										<tbody>		
 										{     
-											this.state.data.map(function(item,key){
+											this.state.favs.map(function(item,key){
 												return (
-													<TableRow name={item.name} 
+													<TableRow1 name={item.name} 
 																fav={(this.state.favs.filter(e => e.id == item.id).length > 0) ? "true" : "false"} 
 																image={item.image} 
-																price={item.price} 
+                                                                low={item.low} 
+                                                                open={item.open}
+                                                                close ={item.close}
+                                                                high={item.high}
 																marketcap={item.marketcap} 
 																fullname={item.fullname} 
 																volume={item.volume} 
@@ -207,7 +185,7 @@ export default class Pfaindex extends React.Component
 																key={item.id}
 																refreshValues={ this.refreshValues }
 																>
-													</TableRow>
+													</TableRow1>
 												)
 											}.bind(this))
 										}
@@ -215,7 +193,6 @@ export default class Pfaindex extends React.Component
 									</Table>
 								</Col>
 								</Row>
-								{ this.loadingSpinner()}
 								</CardBody>
 							</Card>
 							</Col>

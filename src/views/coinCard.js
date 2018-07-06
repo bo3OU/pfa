@@ -93,21 +93,21 @@ class coinCard extends Component {
   
     getData(name) {
       // TODO check this data or get some more usefull coins !!
-      request.get('https://min-api.cryptocompare.com/data/histohour?fsym=' + name + '&tsym=USD&limit=8',function(err,httpResponse, body) {
-        if(err || httpResponse.statusCode == 500)
-          window.location.replace(consts.myurl + "500");
-        else if(httpResponse.statusCode == 404)
-          window.location.replace(consts.myurl + "404");
-        else if(httpResponse.statusCode == 200) {
-          var array = [];
-            JSON.parse(body).Data.forEach(function(v){ 
-            array.push(v.close);
-          });
-          this.setState({
-            data: array
-          })
-        }
-      }.bind(this))
+        request.get('https://min-api.cryptocompare.com/data/histoday?fsym=' + name + '&tsym=USD&limit=8&aggregate=20',function(err,httpResponse, body) {
+            if(err || httpResponse.statusCode == 500)
+            window.location.replace(consts.myurl + "500");
+            else if(httpResponse.statusCode == 404)
+            window.location.replace(consts.myurl + "404");
+            else if(httpResponse.statusCode == 200) {
+            var array = [];
+                JSON.parse(body).Data.forEach(function(v){ 
+                array.push(v.close);
+            });
+            this.setState({
+                data: array
+            })
+            }
+        }.bind(this))
     }
   
 
