@@ -27,22 +27,57 @@ import {Pie} from 'react-chartjs-2';
 
 const pie = {
     labels: [
-      'Red',
-      'Green',
-      'Yellow',
+      'Bitcoin',
+      'Ethereum',
+      'Bitcoin Cash',
+      'Litecoin',
+      'Ripple',
+      'Dash',
+      'NEM',
+      'Monero',
+      'IOTA',
+      'NEO',
+      'Others',
+
     ],
     datasets: [
       {
-        data: [300, 50, 100],
+        data: [42.78,
+             17.78,
+             4.71,
+             1.72,
+             6.84,
+             0.70,
+             0.60,
+             0.83,
+             1.09,
+             0.89,
+             22.06],
         backgroundColor: [
           '#FF6384',
           '#36A2EB',
           '#FFCE56',
-        ],
-        hoverBackgroundColor: [
           '#FF6384',
           '#36A2EB',
           '#FFCE56',
+          '#FF6384',
+          '#36A2EB',
+          '#FFCE56',
+          '#FF6384',
+          '#36A2EB'
+        ],
+        hoverBackgroundColor: [
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56',
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56',
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56',
+            '#FF6384',
+            '#36A2EB'
         ],
       }],
   };
