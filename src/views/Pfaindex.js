@@ -197,6 +197,25 @@ export default class Pfaindex extends React.Component
 								</Card>  
 							</Col>
                         </Row>
+                        <Row>
+                            <Col>
+                                <Card>
+                                    <CardHeader>
+                                        Market Cap dominance
+                                    <div className="card-header-actions">
+                                        <a href="http://www.chartjs.org" className="card-header-action">
+                                        <small className="text-muted">docs</small>
+                                        </a>
+                                    </div>
+                                    </CardHeader>
+                                    <CardBody>
+                                    <div className="chart-wrapper">
+                                        <Pie data={pie} />
+                                    </div>
+                                    </CardBody>
+                                </Card>
+                            </Col>
+                        </Row>
 						<Row>
 							<Col>
 							<Card> 
