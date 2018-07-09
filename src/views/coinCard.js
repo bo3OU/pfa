@@ -126,7 +126,7 @@ class coinCard extends Component {
                     <div>{(parseFloat(this.props.change24) > 0 ? "+ " + this.props.change24 : "- " + this.props.change24.substr(1)) } %</div>
                 </CardBody>
                 <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-                    <Line data={cardChartData1(this.props.change24,this.state.data)} options={cardChartOpts1(this.state.data)} height={70} />
+                    <Line data={cardChartData1(this.props.change24,this.props.data)} options={cardChartOpts1(this.props.data)} height={70} />
                 </div>
             </Card>
         );

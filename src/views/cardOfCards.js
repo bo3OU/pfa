@@ -35,22 +35,49 @@ class cardOfCards extends Component {
         
         return (
             <Row>
-                {     
-                    this.state.data.map(function(item,key){
-                        return (
-                            <Col  xs="12" sm="6" lg="3">
-                                <CoinCard 
-                                    coin={item.name}
-                                    price={item.price}
-                                    change24={item.change24}
-                                    data={[630, 670, 700, 635, 660, 640, 651]}
-                                    key={key}
-                                >
-                                </CoinCard>
-                            </Col>
-                        )
-                }.bind(this))}
-                
+            <Col  xs="12" sm="6" lg="3">
+                <CoinCard
+                    coin="SBTC"
+                    price="6.5"
+                    change24="-14.47"
+                    data={[7.66,8.99,7.66,7.66,7.66,6.5,6.5]}
+                    key={1}
+                >
+                </CoinCard>
+            </Col>
+            <Col  xs="12" sm="6" lg="3">
+                <CoinCard
+                    coin="GO"
+                    price="0.09817"
+                    change24="23.57"
+                    data={[11.93, 11.52, 12.62, 13.61, 13.79, 13.73, 13.83]}
+                    key={3}
+                >
+                </CoinCard>
+            </Col>
+
+
+            <Col  xs="12" sm="6" lg="3">
+                <CoinCard
+                    coin="RCT"
+                    price="0.0001017"
+                    change24="-10.95"
+                    data={[11.57, 11.12, 10.63, 11.00, 10.56, 9.69, 10.57]}
+                    key={4}
+                >
+                </CoinCard>
+            </Col>
+            <Col  xs="12" sm="6" lg="3">
+                <CoinCard
+                    coin="KICK"
+                    price="0.063"
+                    change24="22.04"
+                    data={[5.2,5.2,5.2,5.2,6.3,6.3,6.3]}
+                    key={2}
+                >
+                </CoinCard>
+            </Col>
+
             </Row>
         );
     }
